@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from paginator import Paginator
 
-
+@commands.command()
 async def info(ctx):
     intro = discord.Embed(title="maimai damage bot",
                           description='**maimai damage bot** is a bot initially designed as a plugin to mimi xd bot,'
