@@ -1,0 +1,2 @@
+class TooManyBreaksException(BaseException):
+	pass
