@@ -66,6 +66,7 @@ def get_aliases(query: str):
 	for item in aliases:
 		if query.lower() == item[0].lower():
 			return ', '.join(item[1:])
+	return ''
 
 def query_single(query: str):
 	return session.query(SongData).filter(SongData.title == query).all()
@@ -107,7 +108,9 @@ def find_song_by_difficulty(cc, mode='cc'):
 
 def generate_song_card(obj: List[SongData]):
 	title = obj[0].title
-	aka = get_aliases(title).strip()
+	aka = ''
+	if get_aliases(title).strip() != '':
+		aka = '-#' + get_aliases(title).strip()
 	artist = obj[0].artist
 	category = obj[0].category
 	version_str = ""
@@ -131,7 +134,7 @@ def generate_song_card(obj: List[SongData]):
 	bpm = find_bpm(obj[0].id)['def']
 	embed = Embed(title=title,
 				 description=f"""
--# {aka}""")
+{aka}""")
 	embed.add_field(name="", value=artist, inline=False)
 	embed.add_field(name="", value=f"""
 **Category**: {category}
