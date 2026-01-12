@@ -37,13 +37,14 @@ async def border(ctx, chart_type, diff, query, brk=None):
 			warning_text = ("No High Perfect Break count specified, "
 				"using 10% of the break count rounded down: **") + str(brk) + "**."
 		else:
+			brk = int(brk)
 			if chart_obj.num_brk * 2 < brk:
 				raise TooManyBreaksException("Break count specified exceed double the chart's note count.")
 		init_score = str(int(1010000 - Fraction(2500, chart_obj.num_brk) * brk))
 		lost_score = int(Fraction(2500, chart_obj.num_brk) * brk)
 		init_score = init_score[:-4] + '.' + init_score[-4:] + '%'
 		# Always lower than 1
-		lost_score = '-0.' + str(lost_score) + '%'
+		lost_score = '-0.' + str(lost_score).zfill(4) + '%'
 		embed_title = obj.title + '   ' + STD_EMOJI if target_id < 10000 else DX_EMOJI
 		embed_desc = obj.artist
 		emb = Embed(title=embed_title, description=embed_desc)

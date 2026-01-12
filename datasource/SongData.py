@@ -110,7 +110,7 @@ def generate_song_card(obj: List[SongData]):
 	title = obj[0].title
 	aka = ''
 	if get_aliases(title).strip() != '':
-		aka = '-#' + get_aliases(title).strip()
+		aka = '-# ' + get_aliases(title).strip()
 	artist = obj[0].artist
 	category = obj[0].category
 	version_str = ""
@@ -133,10 +133,9 @@ def generate_song_card(obj: List[SongData]):
 	diff_str = diff_str.strip()
 	bpm = find_bpm(obj[0].id)['def']
 	embed = Embed(title=title,
-				 description=f"""
-{aka}""")
-	embed.add_field(name="", value=artist, inline=False)
-	embed.add_field(name="", value=f"""
+				 description=f"""{aka}
+{artist}
+
 **Category**: {category}
 **Version**: 
 {version_str}
