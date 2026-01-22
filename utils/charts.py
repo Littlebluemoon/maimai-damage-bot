@@ -65,7 +65,7 @@ def generate_rating_table(target):
 	result['embeds'] = embeds
 	return result
 
-def generate_calculate_command_card(cc):
+def generate_calculate_command_card(cc, ap=False):
 	cc = cc.replace(".", "")
 	if int(cc) < 10 or int(cc) > 150:
 		return None
@@ -74,6 +74,7 @@ def generate_calculate_command_card(cc):
 					  '------------------------\n'
 	rating_table = rating_table1 = rating_table2 = ''
 	result_set = rating_lookup[str(cc)]
+	ap_rating = max([int(x) for x in list(result_set.keys())]) + 1
 	for key in result_set:
 		if result_set[key] >= 800000 and result_set[key] <= 899999:
 			achv_rate = str(result_set[key])
@@ -90,6 +91,7 @@ def generate_calculate_command_card(cc):
 			achv_rate = f'{achv_rate[:-4]}.{achv_rate[-4:]}'
 			rating_table2 = (PERFECT * int(achv_rate[-3:] == '000')
 							+ f'{achv_rate:>10}%       {key:>6}\n' + MISS + rating_table2)
+	rating_table2 = (PERFECT+ f'         AP       {ap_rating:>6}\n' + MISS + rating_table2)
 	rating_table = rating_table_head + rating_table
 	rating_table1 = rating_table_head + rating_table1
 	rating_table2 = rating_table_head + rating_table2
