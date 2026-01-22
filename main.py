@@ -11,7 +11,7 @@ load_dotenv()
 from command.songdata import lookup, detail, find
 from command.rating import rating, target, calculate
 from command.courses import dan, shindan, otomodachi
-from command.collection import collection
+from command.collection import collection, titles, icons
 from command.cheats import hold, mash
 from command.damage import damage
 from command.border import border
@@ -35,6 +35,8 @@ bot.add_command(dan)
 bot.add_command(shindan)
 bot.add_command(detail)
 bot.add_command(collection)
+bot.add_command(titles)
+bot.add_command(icons)
 bot.add_command(otomodachi)
 bot.add_command(hold)
 bot.add_command(mash)
