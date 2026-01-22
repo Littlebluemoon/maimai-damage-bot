@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Optional
+
 import discord
 from discord.ext import commands
 
@@ -46,7 +48,7 @@ class Multi(discord.ui.View):
         super().__init__(timeout=timeout)
 
     async def start(self, ctx: discord.Interaction | commands.Context, pages: list[discord.embeds],
-                    files=list[discord.File], message=""):
+                    files: list[discord.File] = None, message=""):
 
         if isinstance(ctx, discord.Interaction):
             ctx = await commands.Context.from_interaction(ctx)
