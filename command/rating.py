@@ -26,6 +26,7 @@ async def rating(ctx, cc, rate):
 		msg = f'A chart with a difficulty of {cc} and a score of {rate}% would award you **{math.floor(min(1005000, achv_rate) * RANK[i] * float(cc) / 10000000)}** rating.'''
 		if int(rate.replace('.', '')) >= 1005000:
 			msg += f'\n- If you achieved an All Perfect, you will get **{math.floor(min(1005000, achv_rate) * RANK[i] * float(cc) / 10000000) + 1}** rating instead.'
+		await ctx.send(msg)
 
 
 @commands.command()
