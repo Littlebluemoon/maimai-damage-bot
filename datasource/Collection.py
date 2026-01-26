@@ -16,7 +16,7 @@ session = SessionLocal()
 
 def get_title_for_song(query):
 	song_id = get_song_object(query)
-	print(song_id)
+	song_title = song_id[0].title
 	song_id = [x.id for x in song_id]
 	title_list = session.query(TitleList).filter(TitleList.id.in_(song_id)).all()
 	id_list = []
@@ -38,8 +38,6 @@ def get_title_for_song(query):
 					footer += f"{song.title} [STD], "
 			footer = footer[:-2]
 			res.append([item, footer])
-		# else:
-		# 	print("Dropped due to spoilers : " + item.text)
 
 	emb = []
 	for item in res:
@@ -48,11 +46,13 @@ def get_title_for_song(query):
 						 color=TITLE_RARITY_COLOR[item[0].rarity])
 		tmp.set_footer(text="Songs involved: " + item[1])
 		emb.append(tmp)
-	return emb
+	return {
+		"title": song_title,
+		"pages": emb
+	}
 
 def get_icon_for_song(query):
 	song_id = get_song_object(query)
-	print(song_id)
 	song_id = [x.id for x in song_id]
 	icon_list = session.query(IconList).filter(IconList.id.in_(song_id)).all()
 	id_list = []
@@ -88,4 +88,6 @@ def get_icon_for_song(query):
 		tmp.set_footer(text="Songs involved: " + item[1])
 		tmp.set_thumbnail(url=f"attachment://{item[0].id}.png")
 		emb.append(tmp)
-	return emb, files
+	return {
+		'title': song_id[0].title,
+		'pages': emb}, files

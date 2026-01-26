@@ -5,17 +5,24 @@ from paginator import Paginator
 
 @commands.command()
 async def collection(ctx, *, query):
-	await ctx.send("*collection* has moved to *titles* and *icons*! "
+	await ctx.send("**collection** has moved to **titles** and **icons**! "
 				   "Use these commands to find your desired type of collection.")
 
 @commands.command()
 async def titles(ctx, *, query):
-	titles = get_title_for_song(query)
+	data = get_title_for_song(query)
+	titles = data['pages']
+	song_title = data['title']
+	if len(titles) == 0:
+		await ctx.send(f"No titles related to **{song_title}** was found.")
 	pages = [titles[i:i+4] for i in range(0, len(titles), 4)]
-	await Paginator.Multi().start(ctx, pages=pages)
+	await Paginator.Multi().start(ctx, message=f"Total of **{len(titles)}** titles related to **{song_title}**:",
+								  pages=pages)
 
 @commands.command()
 async def icons(ctx, *, query):
 	icons, files = get_icon_for_song(query)
-	pages = [icons[i:i+4] for i in range(0, len(icons), 4)]
+	if len(icons) == 0:
+		await ctx.send(f"No icons related to **{icons['title']}**.")
+	pages = [icons[i:i+4] for i in range(0, len(icons['pages']), 4)]
 	await Paginator.Multi().start(ctx, pages=pages, files=files)
