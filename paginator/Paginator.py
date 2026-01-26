@@ -55,6 +55,8 @@ class Multi(discord.ui.View):
 
         self.pages = pages
         self.files = files
+        if files is None:
+            self.files = [None] * len(pages)
         self.total_page_count = len(pages)
         self.ctx = ctx
         self.current_page = self.InitialPage
@@ -79,7 +81,7 @@ class Multi(discord.ui.View):
             self.current_page -= 1
 
         self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
-        await self.message.edit(embeds=self.pages[self.current_page], files=self.files[self.current_page], view=self)
+        await self.message.edit(embeds=self.pages[self.current_page], view=self)
 
     async def next(self):
         if self.current_page == self.total_page_count - 1:
@@ -88,7 +90,7 @@ class Multi(discord.ui.View):
             self.current_page += 1
 
         self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
-        await self.message.edit(embeds=self.pages[self.current_page], files=self.files[self.current_page], view=self)
+        await self.message.edit(embeds=self.pages[self.current_page], view=self)
 
     async def next_button_callback(self, interaction: discord.Interaction):
         if interaction.user != self.ctx.author:
