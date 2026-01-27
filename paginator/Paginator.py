@@ -48,7 +48,7 @@ class Multi(discord.ui.View):
         super().__init__(timeout=timeout)
 
     async def start(self, ctx: discord.Interaction | commands.Context, pages: list[discord.embeds],
-                    files: list[discord.File] = None, message=""):
+                    files = None, message=""):
 
         if isinstance(ctx, discord.Interaction):
             ctx = await commands.Context.from_interaction(ctx)
@@ -72,7 +72,11 @@ class Multi(discord.ui.View):
         self.add_item(self.page_counter)
         self.add_item(self.NextButton)
 
-        self.message = await ctx.send(message, embeds=self.pages[self.InitialPage], files=files, view=self, ephemeral=self.ephemeral)
+        file_obj = []
+        for item in self.files[0]:
+            file_obj.append(discord.File(item[0], filename=item[1]))
+
+        self.message = await ctx.send(message, embeds=self.pages[self.InitialPage], files=file_obj, view=self, ephemeral=self.ephemeral)
 
     async def previous(self):
         if self.current_page == 0:
@@ -81,7 +85,13 @@ class Multi(discord.ui.View):
             self.current_page -= 1
 
         self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
-        await self.message.edit(embeds=self.pages[self.current_page], view=self)
+        if self.files:
+            file_obj = []
+            for item in self.files[self.current_page]:
+                file_obj.append(discord.File(item[0], filename=item[1]))
+            await self.message.edit(embeds=self.pages[self.current_page], attachments=file_obj, view=self)
+        else:
+            await self.message.edit(embeds=self.pages[self.current_page], view=self)
 
     async def next(self):
         if self.current_page == self.total_page_count - 1:
@@ -90,7 +100,13 @@ class Multi(discord.ui.View):
             self.current_page += 1
 
         self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
-        await self.message.edit(embeds=self.pages[self.current_page], view=self)
+        if self.files:
+            file_obj = []
+            for item in self.files[self.current_page]:
+                file_obj.append(discord.File(item[0], filename=item[1]))
+            await self.message.edit(embeds=self.pages[self.current_page], attachments=file_obj, view=self)
+        else:
+            await self.message.edit(embeds=self.pages[self.current_page], view=self)
 
     async def next_button_callback(self, interaction: discord.Interaction):
         if interaction.user != self.ctx.author:
