@@ -22,7 +22,7 @@ async def titles(ctx, *, query):
 @commands.command()
 async def icons(ctx, *, query):
 	icons, files = get_icon_for_song(query)
-	if len(icons) == 0:
+	if len(icons['pages']) == 0:
 		await ctx.send(f"No icons related to **{icons['title']}**.")
 	files = [files[i:i+4] for i in range(0, len(icons['pages']), 4)]
 	pages = [icons['pages'][i:i+4] for i in range(0, len(icons['pages']), 4)]
@@ -31,17 +31,17 @@ async def icons(ctx, *, query):
 @commands.command(aliases=['nameplates'])
 async def plates(ctx, *, query):
 	plates, files = get_plate_for_song(query)
-	if len(plates) == 0:
-		await ctx.send(f"No nameplates related to **{icons['title']}**.")
+	if len(plates['pages']) == 0:
+		await ctx.send(f"No nameplates related to **{plates['title']}**.")
 	files = [[i] for i in files]
 	pages = [[i] for i in plates['pages']]
 	await Paginator.Multi().start(ctx, pages=pages, files=files)
 
 @commands.command()
 async def frames(ctx, *, query):
-	plates, files = get_frame_for_song(query)
-	if len(plates) == 0:
-		await ctx.send(f"No frames related to **{icons['title']}**.")
+	frames, files = get_frame_for_song(query)
+	if len(frames['pages']) == 0:
+		await ctx.send(f"No frames related to **{frames['title']}**.")
 	files = [[i] for i in files]
 	pages = [[i] for i in plates['pages']]
 	await Paginator.Multi().start(ctx, pages=pages, files=files)
