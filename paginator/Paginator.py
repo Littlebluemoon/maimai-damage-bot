@@ -55,8 +55,6 @@ class Multi(discord.ui.View):
 
         self.pages = pages
         self.files = files
-        if files is None:
-            self.files = [None] * len(pages)
         self.total_page_count = len(pages)
         self.ctx = ctx
         self.current_page = self.InitialPage
@@ -73,10 +71,14 @@ class Multi(discord.ui.View):
         self.add_item(self.NextButton)
 
         file_obj = []
-        for item in self.files[0]:
-            file_obj.append(discord.File(item[0], filename=item[1]))
+        if self.files:
+            for item in self.files[0]:
+                file_obj.append(discord.File(item[0], filename=item[1]))
 
-        self.message = await ctx.send(message, embeds=self.pages[self.InitialPage], files=file_obj, view=self, ephemeral=self.ephemeral)
+            self.message = await ctx.send(message, embeds=self.pages[self.InitialPage], files=file_obj, view=self, ephemeral=self.ephemeral)
+        else:
+            self.message = await ctx.send(message, embeds=self.pages[self.InitialPage], view=self,
+                                          ephemeral=self.ephemeral)
 
     async def previous(self):
         if self.current_page == 0:
