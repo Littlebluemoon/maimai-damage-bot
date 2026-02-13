@@ -70,5 +70,7 @@ async def border(ctx, chart_type, diff, query, brk=None):
 		await ctx.send(str(e))
 	except TooManyBreaksException as e:
 		await ctx.send(str(e))
+	except ValueError as e:
+		await ctx.send(str(e) +'\nThis error must have been thrown because your song title has more than one word. If that is the case, wrap the song title around quotes.')
 	except KeyError as e:
 		await ctx.send("The difficulty code you entered is invalid. Available values: `bas, adv, exp, mas, rem, remas` (or their full forms)")
