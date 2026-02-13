@@ -64,21 +64,35 @@ def get_otomodachi_course(rank):
 
 	embed = []
 	for song in songs:
-		song_obj = query_single_by_id(song.boss)
-		tmp = Embed(title=f"{song_obj.title}    {DX_EMOJI if song.boss >= 10000 else STD_EMOJI}",
-					description=song_obj.artist,
-					color=DIFF_COLOR[song.bossDifficulty])
-		song_diff = [song_obj.bas, song_obj.adv, song_obj.exp, song_obj.mas, song_obj.rem]
-		score_range = ast.literal_eval(song.scoreRange)
-		score_range = [str(x)[:-4] + '.' + str(x)	[-4:] for x in score_range]
-		tmp.add_field(name="Boss Rank: ", value=song.rank, inline=True)
-		#buffer
-		tmp.add_field(name="VS:", value=song.playerName, inline=True)
-		tmp.add_field(name="Difficulty: ",
-					  value=f"**{convert_cc_to_difficulty(song_diff[song.bossDifficulty])}** ({song_diff[song.bossDifficulty]})",
-					  inline=True)
-		tmp.add_field(name="Boss Strength: ", value=f"**{song.bossStrength}** ({OTOMODACHI_RANK_MAPPING[song.bossStrength]})")
-		tmp.add_field(name="Score Range: ", value=f"{score_range[0]}% ~ {score_range[1]}%")
-		tmp.set_thumbnail(url=f"https://dp4p6x0xfi5o9.cloudfront.net/maimai/img/cover/{song_obj.jacket}")
-		embed.append(tmp)
+		if song.boss == '???':
+			tmp = Embed(title="???",
+						description="???",
+						color=DIFF_COLOR[3])
+			tmp.add_field(name="Boss Rank: ", value="SSS1", inline=True)
+			# buffer
+			tmp.add_field(name="VS:", value="???", inline=True)
+			tmp.add_field(name="Difficulty: ",
+						  value=f"**14+** (???)",
+						  inline=True)
+			tmp.add_field(name="Boss Strength: ", value=f"**MAX** (101.0000%)")
+			tmp.add_field(name="Score Range: ", value=f"??? ~ ???")
+			embed.append(tmp)
+		else:
+			song_obj = query_single_by_id(int(song.boss))
+			tmp = Embed(title=f"{song_obj.title}    {DX_EMOJI if int(song.boss) >= 10000 else STD_EMOJI}",
+						description=song_obj.artist,
+						color=DIFF_COLOR[int(song.bossDifficulty)])
+			song_diff = [song_obj.bas, song_obj.adv, song_obj.exp, song_obj.mas, song_obj.rem]
+			score_range = ast.literal_eval(song.scoreRange)
+			score_range = [str(x)[:-4] + '.' + str(x)	[-4:] for x in score_range]
+			tmp.add_field(name="Boss Rank: ", value=song.rank, inline=True)
+			#buffer
+			tmp.add_field(name="VS:", value=song.playerName, inline=True)
+			tmp.add_field(name="Difficulty: ",
+						  value=f"**{convert_cc_to_difficulty(song_diff[int(song.bossDifficulty)])}** ({song_diff[int(song.bossDifficulty)]})",
+						  inline=True)
+			tmp.add_field(name="Boss Strength: ", value=f"**{song.bossStrength}** ({OTOMODACHI_RANK_MAPPING[song.bossStrength]})")
+			tmp.add_field(name="Score Range: ", value=f"{score_range[0]}% ~ {score_range[1]}%")
+			tmp.set_thumbnail(url=f"https://dp4p6x0xfi5o9.cloudfront.net/maimai/img/cover/{song_obj.jacket}")
+			embed.append(tmp)
 	return embed
