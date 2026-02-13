@@ -45,7 +45,7 @@ async def border(ctx, chart_type, diff, query, brk=None):
 		init_score = init_score[:-4] + '.' + init_score[-4:] + '%'
 		# Always lower than 1
 		lost_score = '-0.' + str(lost_score).zfill(4) + '%'
-		embed_title = obj.title + '   ' + STD_EMOJI if target_id < 10000 else DX_EMOJI
+		embed_title = obj.title + '   ' + (STD_EMOJI if target_id < 10000 else DX_EMOJI)
 		embed_desc = obj.artist
 		emb = Embed(title=embed_title, description=embed_desc)
 		emb.add_field(name="Difficulty", value=f"{convert_cc_to_difficulty(diff_array[diff])} ({diff_array[diff]})", inline=True)
