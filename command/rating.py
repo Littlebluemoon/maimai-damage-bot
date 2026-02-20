@@ -33,6 +33,8 @@ async def rating(ctx, cc, rate):
 async def target(ctx, tgt_rating):
 	if int(tgt_rating) <= 0:
 		await ctx.send(f"Rating to target should be higher than 0")
+	elif int(tgt_rating) == 338:
+		await ctx.send(f"The only way to reach **338** rating is by scoring an AP on a Lv. 15 chart!")
 	elif int(tgt_rating) > 338:
 		await ctx.send(f"We will need a 15.1 for that")
 	else:
