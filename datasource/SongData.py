@@ -10,7 +10,7 @@ from models.Stats import Stats00, Stats01, Stats02, Stats03, Stats04
 from utils.database import SessionLocal
 from utils.charts import convert_cc_to_difficulty
 from constants import NOTE_NAMES, NOTE_MULTIPLIER_BY_INDEX, GREAT, GOOD, MISS, PERFECT, STD_EMOJI, DX_EMOJI, DIFF_COLOR, \
-	LEVEL_LIST
+	LEVEL_LIST, TITLE_RARITY_COLOR
 from discord import Embed
 
 
@@ -131,18 +131,25 @@ def generate_song_card(obj: List[SongData]):
 			diff_str += f" / **{convert_cc_to_difficulty(chart.rem)}** ({chart.rem})"
 		diff_str += '\n'
 	diff_str = diff_str.strip()
+	deleted_string = ''
+	locked_string = ''
+	if obj[0].deleted:
+		deleted_string = ':wastebasket: **Deleted:** ' + str(obj[0].deleted) + '\n'
+	if obj[0].locked:
+		locked_string = ':lock: Locked: ' + obj[0].locked + '\n'
 	bpm = find_bpm(obj[0].id)['def']
 	embed = Embed(title=title,
 				 description=f"""{aka}
-{artist}
-
-**Category**: {category}
-**Version**: 
+{deleted_string}{locked_string}
+**Artist:** {artist}
+**Category:** {category}
+**Version:** 
 {version_str}
-**BPM**: {str(bpm)}
-**Difficulty**:
+**BPM:** {str(bpm)}
+**Difficulty:**
 {diff_str}
-""")
+""",
+color=TITLE_RARITY_COLOR['Rainbow'])
 	embed.set_thumbnail(url=thumb_url)
 	return embed
 

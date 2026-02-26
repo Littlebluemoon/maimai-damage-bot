@@ -19,3 +19,6 @@ class SongData(Base):
     mas: Mapped[float] = mapped_column(Float)
     rem: Mapped[float] = mapped_column(Float)
     release: Mapped[str] = mapped_column(Text)
+    long: Mapped[str] = mapped_column(Text)
+    deleted: Mapped[str] = mapped_column(Text)
+    locked: Mapped[str] = mapped_column(Text)
