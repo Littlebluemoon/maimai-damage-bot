@@ -136,7 +136,7 @@ def generate_song_card(obj: List[SongData]):
 	if obj[0].deleted:
 		deleted_string = ':wastebasket: **Deleted:** ' + str(obj[0].deleted) + '\n'
 	if obj[0].locked:
-		locked_string = ':lock: Locked: ' + obj[0].locked + '\n'
+		locked_string = ':lock: **Locked:** ' + obj[0].locked + '\n'
 	bpm = find_bpm(obj[0].id)['def']
 	embed = Embed(title=title,
 				 description=f"""{aka}
