@@ -177,7 +177,7 @@ def generate_damage_table(judges):
 	tap_damage = [0] + [int(get_normal_note_damage(judges[0][i], 1 - REGULAR_NOTE_RATIO[i], weight)) / -10000.0 for i in range(2, 5)]
 	hold_damage = [0] + [int(get_normal_note_damage(judges[1][i], 1 - REGULAR_NOTE_RATIO[i], weight) * 2) / -10000.0 for i in range(2, 5)]
 	slide_damage = [0] + [int(get_normal_note_damage(judges[2][i], 1 - REGULAR_NOTE_RATIO[i], weight) * 3) / -10000.0 for i in range(2, 5)]
-	touch_damage = [0] + [int(get_normal_note_damage(judges[3][i], 1 - REGULAR_NOTE_RATIO[i], weight) * 3) / -10000.0 for i in range(2, 5)]
+	touch_damage = [0] + [int(get_normal_note_damage(judges[3][i], 1 - REGULAR_NOTE_RATIO[i], weight)) / -10000.0 for i in range(2, 5)]
 	break_damage = [int(get_break_note_damage(judges[4], weight, 0)) / -10000.0,
 					int(get_break_note_damage(judges[4], weight, 1)) / -10000.0,
 					int(get_break_note_damage(judges[4], weight, 2)) / -10000.0,
