@@ -519,7 +519,7 @@ Seyana. ～何でも言うことを聞いてくれるアカネチャン～	Seyan
 おねがいダーリン	Onegai Darling
 My First Phone	mfp
 ネ！コ！	ne! ko!
-ロールプレイングゲーム	Role-playing game	rpg
+ロールプレイングゲーム	Role-playing game
 ヒバナ	Hibana
 ロキ	Roki
 Money Money
@@ -1373,3 +1373,73 @@ MYTH Re：LEASE	myth release
 廃墟にいますキャンペーン	Haikyo ni imasu campaign	override at home
 ヒアソビ	Hiasobi	Playing With Fire
 ラプラスショコラ	Laplace's Chocolat
+じょいふる	Joyful
+Everyday、カチューシャ	Everyday, Katyusha
+恋愛サーキュレーション	Renai Circulation	Love Circulation
+コネクト	Connect
+愛を止めないで	Ai wo tomenaide
+アイデンティティ	Identity
+ヘビーローテーション	Heavy Rotation
+つけまつける	Tsuke ma tsukeru
+サブリナ	Sabrina
+リライト	Rewrite
+カルマ	Karma
+LOVEドッきゅん♥	LOVE Dokkyun
+女々しくて	Memeshikute
+サラバ、愛しき悲しみたちよ	Saraba, itoshiki kanashimi tachi yo	Goodbye, Dear Sorrows
+創聖のアクエリオン	Sousei no Aquarion	Genesis of Aquarion
+君の知らない物語	Kimi no Shiranai Monogatari
+残酷な天使のテーゼ	Zankokuna Tenshi no Thesis	A Cruel Angel's Thesis	evangelion theme
+紅蓮の弓矢	Guren no yumiya
+リクライム	Reclimb
+恋のヒメヒメぺったんこ	Koi no Himehime Pettanko
+1/3の純情な感情	Sanbun no ichi no junjouna kanjou	1/3 Pure Heart Emotion
+みかんのうた	Mikan no uta
+毒占欲	Dokusenyoku	Mono Poisoner
+シリウス	Sirius
+ほとんど違法行為		Hotondo ihoukoui
+ファミリーパーティー	Family Party
+おいでよ！妖精の森	Oideyo! Yousei no mori
+ニブンノイチ	Nibun no ichi
+カノン	Canon
+オルフェ	Orpheus
+ココロオドル	Kokoro Odoru
+おじゃま虫	Ojama Mushi	Stickybug
+はじめまして地球人さん	Hajimemashite, Chikyuujin-san	Nice To Meet You, Mr. Earthling
+絵の上手かった友達	E no Umakatta Tomodachi	My Friend Was Good At Drawing
+ひみつをちょーだい	Himitsu wo Choudai
+ゲラゲラポーのうた	Geragerapo no Uta
+秘密の扉から会いに来て	Himitsu no Tobira Kara Ai ni Kite
+かくしん的☆めたまるふぉ～ぜっ！	Kakushin teki☆Metamaruphose!	umaru chan
+極上スマイル	Gokujou Smile
+でんでんぱっしょん	Den Den Passion
+青春はNon-Stop！	Seishun wa Non-Stop!
+ようかい体操第一	Youkai Taishou Daiichi	Youkai Exercise #1
+ヘタリアン☆ジェット	Hetalian☆Jet
+夏にキスしていいですか？	Natsu ni Kiss shite ii desu ka?
+夏祭り	Natsu Matsuri
+シュガーソングとビターステップ	Sugar Song to Bitter Step	Sugar Song and Bitter Step
+Scatman (Ski Ba Bop Ba Dop Bop)	Scatman	skibidi
+イチズレシピ	Ichizu Recipe
+ふ・れ・ん・ど・し・た・い	Fu-re-n-do-shi-ta-i	Furendoshitai
+ちょちょちょ！ゆるゆり☆かぷりっちょ！！！	Chochocho! YuruYuri capriccio!!!
+ヒビカセ	Hibikase	No title
+ゆりゆららららゆるゆり大事件	Yuriyurararara YuruYuri daijiken
+ファッとして桃源郷	Fatto Shite Tougenkyo
+いぇす！ゆゆゆ☆ゆるゆり♪♪	Yes!YuYuYu☆YuruYuri♪♪
+SUSHI食べたい feat. ソイソース	SUSHI Tabetai feat. Soy Sauce	Sushi Tabetai
+SAKURAスキップ	SAKURA Skip
+ホシトハナ	Hoshi to Hana
+名探偵連続殺人事件	Meitantei Renzoku Satsujin Jiken	The Serial Murders of Great Detectives
+未来(ソラ)の歌	Sora no uta
+あ・え・い・う・え・お・あお!!	A.E.I.U.E.O.Ao!!
+ガヴリールドロップキック	Gabriel DropKick
+ヤバい○○	Yabai○○	Yabai
+にめんせい☆ウラオモテライフ！	Nimensei☆Uraomote Life!
+うまるん体操	Umarun Taishou
+アンチクロックワイズ	Anticlockwise
+全力☆Summer!	Zenryoku☆Summer!
+甲賀忍法帖	Kouga ninpouchou
+アリサのテーマ	Alisa no Theme
+お気に召すまま	Oki ni Nesu Mama	As you like it
+ワンダーラスト	The "Wanderlast" wanderlas
