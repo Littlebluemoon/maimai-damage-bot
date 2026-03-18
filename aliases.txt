@@ -1442,4 +1442,7 @@ SAKURAスキップ	SAKURA Skip
 甲賀忍法帖	Kouga ninpouchou
 アリサのテーマ	Alisa no Theme
 お気に召すまま	Oki ni Nesu Mama	As you like it
-ワンダーラスト	The "Wanderlast" wanderlas
+ワンダーラスト	The "Wanderlast" wanderlast
+Signs Of Love (“Never More” ver.)	Signs Of Love
+specialist (“Never More” ver.)	specialist
+Time To Make History (AKIRA YAMAOKA Remix)	Time To Make History	akira yamaoka
