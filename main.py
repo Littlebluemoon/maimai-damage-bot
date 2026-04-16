@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from command.info import info
+from command.info import about
 
 load_dotenv()
 from command.songdata import lookup, detail, find
@@ -25,7 +25,7 @@ os.environ["SSL_CERT_FILE"] = certifi.where()
 bot = commands.Bot(command_prefix='m$', intents=intents)
 bot.help_command = None
 
-bot.add_command(info)
+bot.add_command(about)
 bot.add_command(lookup)
 bot.add_command(find)
 bot.add_command(rating)
