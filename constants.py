@@ -158,3 +158,21 @@ BREAK_BONUS_MULT = [0,
                     Fraction(3, 5), Fraction(3, 5), Fraction(3, 5),
                     Fraction(7, 10),
                     1]
+
+# Song data
+GENRES = {
+    '101': 'POPS＆ANIME',
+    '102': 'niconico＆VOCALOID',
+    '103': '東方Project',
+    '104': 'GAME＆VARIETY',
+    '105': 'maimai',
+    '106': 'オンゲキ＆CHUNITHM'
+}
+
+VERSION = [
+    'maimai', 'maimai PLUS', 'GreeN', 'GreeN PLUS', 'ORANGE', 'ORANGE PLUS',
+    'PiNK', 'PiNK PLUS', 'MURASAKi', 'MURASAKi PLUS', 'MiLK', 'MiLK PLUS', 'FiNALE',
+    'でらっくす', 'でらっくす PLUS', 'Splash', 'Splash PLUS', 'UNiVERSE', 'UNiVERSE PLUS',
+    'FESTiVAL', 'FESTiVAL PLUS', 'BUDDiES', 'BUDDiES PLUS', 'PRiSM', 'PRiSM PLUS',
+    'CiRCLE', 'CiRCLE PLUS'
+]

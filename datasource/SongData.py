@@ -10,7 +10,7 @@ from models.Stats import Stats00, Stats01, Stats02, Stats03, Stats04
 from utils.database import SessionLocal
 from utils.charts import convert_cc_to_difficulty
 from constants import NOTE_NAMES, NOTE_MULTIPLIER_BY_INDEX, GREAT, GOOD, MISS, PERFECT, STD_EMOJI, DX_EMOJI, DIFF_COLOR, \
-	LEVEL_LIST, TITLE_RARITY_COLOR
+	LEVEL_LIST, TITLE_RARITY_COLOR, VERSION, GENRES
 from discord import Embed
 
 
@@ -112,10 +112,10 @@ def generate_song_card(obj: List[SongData]):
 	if get_aliases(title).strip() != '':
 		aka = '-# ' + get_aliases(title).strip()
 	artist = obj[0].artist
-	category = obj[0].category
+	category = GENRES[str(obj[0].category)]
 	version_str = ""
 	for chart in obj:
-		version_str += f"- **{chart.type}**: {chart.version}"
+		version_str += f"- **{chart.type}**: {VERSION[int(chart.version)]}"
 		if chart.release:
 			version_str += f" ({chart.release})"
 		version_str += '\n'
