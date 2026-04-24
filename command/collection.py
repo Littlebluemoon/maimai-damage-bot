@@ -42,6 +42,7 @@ async def frames(ctx, *, query):
 	frames, files = get_frame_for_song(query)
 	if len(frames['pages']) == 0:
 		await ctx.send(f"No frames related to **{frames['title']}**.")
+	print(files)
 	files = [[i] for i in files]
 	pages = [[i] for i in frames['pages']]
 	await Paginator.Multi().start(ctx, pages=pages, files=files)

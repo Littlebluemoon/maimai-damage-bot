@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
+from command.chiho import chiho
 from command.info import about
 
 load_dotenv()
@@ -45,5 +46,6 @@ bot.add_command(border)
 bot.add_command(help)
 bot.add_command(plates)
 bot.add_command(frames)
+bot.add_command(chiho)
 
 bot.run(os.getenv("BOT_TOKEN"))
