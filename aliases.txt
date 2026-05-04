@@ -1458,4 +1458,8 @@ YA･DA･YO [Reborn]	yadayo	yadayo reborn
 スノーマン (Rerec)	Snowman (Rerec)	Snowman
 初音ミクの暴走	Hatsune Miku no Bousou	The Rampage of Hatsune Miku
 Let's ミクササイズ！！	Let's Mikusercise!!!	mikusercise
-ラストピースに祝福と栄光を	Last Piece ni Shukufuku to Eikou wo	Finding Glory and Blessings in the Last Piece	last piece	endmark 2
+ラストピースに祝福と栄光を	Last Piece ni Shukufuku to Eikou wo	Finding Blessings and Glory in the Last Piece	last piece	endmark 2
+ミクマリ	Mikumari
+雲外蒼電 -Dreaming Voltage-	Ungai Souten -Dreaming Voltage-	dreaming voltage
+鬼女紅妖	Kijo Kouyou
+華天月兎	Katen Getto	Katen Moon Rabbit	moon rabbit
