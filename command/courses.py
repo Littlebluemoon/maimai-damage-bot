@@ -18,16 +18,16 @@ async def dan(ctx, course_id):
 
 @commands.command()
 async def shindan(ctx, course_id):
-	if int(course_id) not in range(1, 11) and course_id not in ['kai', 'ura']:
-		await ctx.send("Course ID invalid. Accepted values: 1~10, kai or 11 (for 真皆伝), ura or 12 (for 裏皆伝).")
+	if course_id.lower() == 'kai':
+		data = get_course_card(21)
+	elif course_id.lower() == 'ura':
+		data = get_course_card(22)
 	else:
-		if course_id.lower() == 'kai':
-			data = get_course_card(21)
-		elif course_id.lower() == 'ura':
-			data = get_course_card(22)
+		if int(course_id) not in range(1, 13):
+			await ctx.send("Course ID invalid. Accepted values: 1~10, kai or 11 (for 真皆伝), ura or 12 (for 裏皆伝).")
 		else:
 			data = get_course_card(int(course_id)+10)
-		await ctx.send(data['flavor_text'], embeds=data['embeds'])
+	await ctx.send(data['flavor_text'], embeds=data['embeds'])
 
 @commands.command(aliases=['otomo', 'grade', 'legend'])
 async def otomodachi(ctx, grade):
