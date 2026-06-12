@@ -27,7 +27,7 @@ async def heatmap(ctx, chart_type: str, diff: str, *, query: str):
 		heatmap_file = f"{target_id:06}_0{diff}.json"
 		heatmap_data = generate_song_heatmap(heatmap_file)
 		file = heatmap_data['image']
-		embed_title = f"{obj.title}" + (STD_EMOJI if target_id < 10000 else DX_EMOJI)
+		embed_title = f"{obj.title}     " + (STD_EMOJI if target_id < 10000 else DX_EMOJI)
 		embed_color = DIFF_COLOR[diff]
 		embed = discord.Embed(title=embed_title, color=embed_color,
 		description=f"""- Note count: {heatmap_data['note_count']}

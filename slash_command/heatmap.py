@@ -8,7 +8,10 @@ from exceptions.SongQueryException import IncorrectChartTypeException, NoSongFou
 from command.songdata import get_song_object
 from utils.heatmap import generate_song_heatmap
 
-@app_commands.command()
+@app_commands.command(name="heatmap", description="Generate note heatmap for a chart (beta)")
+@app_commands.describe(chart_type="Chart type (ST/DX)",
+                       diff="Chart difficulty",
+                       query="Song name")
 async def heatmap(ctx, chart_type: str, diff: str, *, query: str):
 	try:
 		diff = DIFFICULTY_MAPPING[diff.lower()]
