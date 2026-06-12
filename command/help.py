@@ -6,6 +6,8 @@ from exceptions.HelpCommandException import CommandNotFoundException
 @commands.command()
 async def help(ctx, command):
 	try:
+		if command is None:
+			command = 'help'
 		await ctx.send(embed=get_help_embed(command))
 	except CommandNotFoundException as e:
 		await ctx.send(str(e))

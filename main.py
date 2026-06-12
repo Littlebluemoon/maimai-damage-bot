@@ -18,6 +18,9 @@ from command.damage import damage
 from command.border import border
 from command.help import help
 
+import slash_command.songdata
+import slash_command.damage
+
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -48,4 +51,18 @@ bot.add_command(plates)
 bot.add_command(frames)
 bot.add_command(chiho)
 
+bot.tree.add_command(slash_command.songdata.lookup)
+bot.tree.add_command(slash_command.songdata.detail)
+bot.tree.add_command(slash_command.songdata.find)
+bot.tree.add_command(slash_command.damage.damage)
+
+GUILD_ID = 764341849921159188
+
+@bot.event
+async def on_ready():
+	synced = await bot.tree.sync()
+	print(synced)
+
+print(bot.tree.get_commands())
 bot.run(os.getenv("BOT_TOKEN"))
+
