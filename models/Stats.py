@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, Text
+from sqlalchemy import Integer, Text, Float
 from sqlalchemy.orm import Mapped, mapped_column
 
 from utils.database import Base
@@ -30,6 +30,7 @@ class StatsBase(Base):
     num_ttp: Mapped[int] = mapped_column(Integer)
     num_brk: Mapped[int] = mapped_column(Integer)
     num_all: Mapped[int] = mapped_column(Integer)
+    duration: Mapped[float] = mapped_column(Float)
 
 
 class Stats00(StatsBase):

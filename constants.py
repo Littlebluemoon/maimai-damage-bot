@@ -27,27 +27,31 @@ DIFFICULTY_MAPPING = {
 NOTE_NAMES = [
     'Tap',
     'Normal',
-    'EX',
+    'EX', # 2
     'Hold',
     'Normal',
-    'EX',
+    'EX', # 5
     'Touch Hold',
     'Slide',
     'Touch',
     'Break',
     'Tap',
-    'EXTap',
+    'EXTap', # 11
     'Hold',
-    'EXHold',
+    'EXHold', # 13
     'Slide'
 ]
 
 NOTE_MULTIPLIER_BY_INDEX = {
     0: 1,
+    2: 1,
     3: 2,
+    5: 2,
     7: 3,
     8: 1,
-    9: 5
+    9: 5,
+    11: 5,
+    13: 5,
 }
 
 KALEIDX_DIFF_SCALE = {

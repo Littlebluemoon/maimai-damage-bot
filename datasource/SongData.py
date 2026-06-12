@@ -12,7 +12,9 @@ from utils.charts import convert_cc_to_difficulty
 from constants import NOTE_NAMES, NOTE_MULTIPLIER_BY_INDEX, GREAT, GOOD, MISS, PERFECT, STD_EMOJI, DX_EMOJI, DIFF_COLOR, \
 	LEVEL_LIST, TITLE_RARITY_COLOR, VERSION, GENRES
 from discord import Embed
+from decimal import Decimal
 
+from utils.time_utils import time_string
 
 session = SessionLocal()
 
@@ -38,9 +40,9 @@ def find_song_title_from_db(query: str):
 			match_name = item.title.strip()
 			ratio = current_ratio
 			print(f"New match: {match_name} {ratio}")
-	if ratio >= 70:
-		return match_name, ratio, True
 	if ratio >= 50:
+		return match_name, ratio, True
+	if ratio >= 40:
 		return match_name, ratio, False
 	return None, 0, False
 
@@ -56,9 +58,9 @@ def find_song_title_from_aliases(query: str):
 				match_name = aliases[cnt][0].strip()
 				ratio = current_ratio
 				print(f"New match: {match_name} {ratio}")
-	if ratio >= 70:
-		return match_name, ratio, True
 	if ratio >= 50:
+		return match_name, ratio, True
+	if ratio >= 40:
 		return match_name, ratio, False
 	return None, 0, False
 
@@ -180,11 +182,17 @@ def generate_chart_detail(chart_id, diff):
 	weight = obj.num_tap + 2 * obj.num_hld + 3 * obj.num_sld + 5 * obj.num_brk + obj.num_ttp
 	tap_value = 100 / float(weight)
 	break_value = 1 / float(obj.num_brk)
+
+	finale_score_abs = 500 * obj.num_tap + 1000 * obj.num_hld + 1500 * obj.num_sld + 2600 * obj.num_brk + 500 * obj.num_ttp
+	finale_score_min = 500 * obj.num_tap + 1000 * obj.num_hld + 1500 * obj.num_sld + 2500 * obj.num_brk + 500 * obj.num_ttp
+	finale_score_rrc = str(round(Decimal(str(finale_score_abs)) / Decimal(str(finale_score_min)) * 10000))
+
 	embed_text = f"""
 **General**
 - Level: {convert_cc_to_difficulty(diff_array[diff])} ({diff_array[diff]})
 - Notes Designer: {obj.charter}
-- Note count: {obj.num_all}
+- Chart duration: {time_string(obj.duration)}
+- Note count: {obj.num_all} ({round(int(obj.num_all) / obj.duration, 2)} notes per second) 
 - Total chart weight: {weight} ({format(tap_value, '.4f')} % per tap)
 **Notes**
 """
@@ -212,7 +220,30 @@ def generate_chart_detail(chart_id, diff):
 					multiplier = 5
 					bonus = item * break_value
 				embed_text += f"  - {NOTE_NAMES[i]}: {item} ({format(tap_value * item * multiplier + bonus, '.4f')} %)\n"
+	# "Free" score
+	free_note_count = obj.xtp + obj.xst + obj.xho + obj.bxx + obj.xbs + obj.bxh
+	free_score = 0
+
+	# incl EX breaks & break slides
+	free_breaks = obj.bxx + obj.xbs + obj.bxh + obj.bsl
+	free_break_score = f"{format(tap_value * free_breaks * 5 + free_breaks / obj.num_brk, '.4f')}"
+
+	min_ap_score = 101 - 0.5 * (obj.num_brk - free_breaks) / obj.num_brk
+
+	for (i, item) in enumerate(note_type_array):
+		if i in [2, 5, 11, 13]:
+			if item != 0:
+				multiplier = NOTE_MULTIPLIER_BY_INDEX[i]
+				free_score += (tap_value * item * multiplier + int(i >= 9) * item / obj.num_brk)
+		else:
+			pass
 	# to Embed
+	embed_text += f"""**Misc**
+- Total EX notes: {free_note_count} ({format(free_score, '.4f')} % of score)
+- Free Break notes: {free_breaks} / {obj.num_brk} ({free_break_score} % of score)
+- Minimum AP score: {min_ap_score:.4f} %
+- Maximum Finale Score: {finale_score_abs} ({finale_score_rrc[0:3]}.{finale_score_rrc[3:]} %)"""
+
 	chart_type_emoji = STD_EMOJI if chart_id < 10000 else DX_EMOJI
 	emb = Embed(title=f"{song_obj.title}   {chart_type_emoji}", description=f"{song_obj.artist}\n{embed_text}",
 				color=DIFF_COLOR[diff])

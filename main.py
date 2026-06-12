@@ -17,6 +17,7 @@ from command.cheats import hold, mash
 from command.damage import damage
 from command.border import border
 from command.help import help
+from command.heatmap import heatmap
 
 import slash_command.songdata
 import slash_command.rating
@@ -26,6 +27,7 @@ import slash_command.courses
 import slash_command.collection
 import slash_command.cheats
 import slash_command.border
+import slash_command.heatmap
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -56,6 +58,7 @@ bot.add_command(help)
 bot.add_command(plates)
 bot.add_command(frames)
 bot.add_command(chiho)
+bot.add_command(heatmap)
 
 bot.tree.add_command(slash_command.songdata.lookup)
 bot.tree.add_command(slash_command.songdata.detail)
@@ -82,6 +85,7 @@ bot.tree.add_command(slash_command.cheats.mash)
 bot.tree.add_command(slash_command.cheats.hold)
 
 bot.tree.add_command(slash_command.border.border)
+bot.tree.add_command(slash_command.heatmap.heatmap)
 
 @bot.event
 async def on_ready():

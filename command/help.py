@@ -4,7 +4,7 @@ from datasource.Help import get_help_embed
 from exceptions.HelpCommandException import CommandNotFoundException
 
 @commands.command()
-async def help(ctx, command):
+async def help(ctx, command=None):
 	try:
 		if command is None:
 			command = 'help'
