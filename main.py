@@ -18,6 +18,7 @@ from command.damage import damage
 from command.border import border
 from command.help import help
 from command.heatmap import heatmap
+from command.edging import edging
 
 import slash_command.songdata
 import slash_command.rating
@@ -59,6 +60,7 @@ bot.add_command(plates)
 bot.add_command(frames)
 bot.add_command(chiho)
 bot.add_command(heatmap)
+bot.add_command(edging)
 
 bot.tree.add_command(slash_command.songdata.lookup)
 bot.tree.add_command(slash_command.songdata.detail)

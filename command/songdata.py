@@ -32,7 +32,7 @@ def get_song_object(query: str):
 					obj = query_single(target[0])
 				return obj
 			except Exception:
-				raise DeletedSongFoundException("No such song was found or an unexpected error has occured.")
+				raise DeletedSongFoundException("No such song was found or an unexpected error has occurred.")
 
 @commands.command(aliases=['info'])
 async def lookup(ctx, *, query: str):

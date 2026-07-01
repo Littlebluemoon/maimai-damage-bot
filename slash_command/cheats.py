@@ -26,7 +26,7 @@ async def mash(ctx, bpm: float, division: int):
                 crit_decide = "- :information_source: This is one of the rare situations where you can mash the " \
                              "buttons at the same time and achieve CRITICAL PERFECT for both inputs, assuming" \
                              " that you have the strength to do so.\n"
-                crit_decide += f"    - This requires at least **{round(50000 / dist) / 100}** hits per second with " \
+                crit_decide += f"  - This requires at least **{round(50000 / dist) / 100}** hits per second with " \
                               f"both of your hands. "
             else:
                 crit_decide = "- :information_source: You cannot mash both the buttons at the same time" \
