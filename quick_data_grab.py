@@ -27,7 +27,7 @@ def scrape_rates(soup, cc, difficulty):
 	reached_fuckass_song = False
 	for song in song_blocks:
 		# Again like fuck that song
-		chart_type = song.find('img', class_='music_kind_icon').get('src')[19:-3][0:2]
+		chart_type = song.find('img', class_='music_kind_icon').get('src')[49:-3][0:2]
 		# print(f"Song : {song.find('div', class_='music_name_block').text}")
 		chart_obj = query_single(song.find('div', class_='music_name_block').text)[0]
 		# Again fuck these songs
@@ -73,21 +73,22 @@ def main():
 	# Easiest master chart is 10+ (10.7) (14)
 	# Hardest expert chart is 13+ (13.9) (20)
 	for cc in range(9, 24):
-		if cc < 21:
-			print(f"Now processing {cc:02d}_2.html")
-			with open(f"clear_percent/{cc:02d}_2.html", "r", encoding="utf-8") as clear_data:
-				soup = BeautifulSoup(clear_data, "html.parser")
-				level_clear_data_exp[cc]['sssp'] = scrape_rates(soup, cc, 2)
-		if cc >= 14 and cc < 23:
-			print(f"Now processing {cc:02d}_3.html")
-			with open(f"clear_percent/{cc:02d}_3.html", "r", encoding="utf-8") as clear_data:
-				soup = BeautifulSoup(clear_data, "html.parser")
-				level_clear_data_mas[cc]['sssp'] = scrape_rates(soup, cc, 3)
-		if cc >= 17:
-			print(f"Now processing {cc:02d}_4.html")
-			with open(f"clear_percent/{cc:02d}_4.html", "r", encoding="utf-8") as clear_data:
-				soup = BeautifulSoup(clear_data, "html.parser")
-				level_clear_data_remas[cc]['sssp'] = scrape_rates(soup, cc, 4)
+		for clear_type in ['sssp', 'sss', 'ss', 's', 'ap']:
+			if cc < 21:
+				print(f"Now processing {cc:02d}_2_{clear_type}.html")
+				with open(f"clear_percent/{cc:02d}_2_{clear_type}.html", "r", encoding="utf-8") as clear_data:
+					soup = BeautifulSoup(clear_data, "html.parser")
+					level_clear_data_exp[cc][clear_type] = scrape_rates(soup, cc, 2)
+			if cc >= 14 and cc < 23:
+				print(f"Now processing {cc:02d}_3_{clear_type}.html")
+				with open(f"clear_percent/{cc:02d}_3_{clear_type}.html", "r", encoding="utf-8") as clear_data:
+					soup = BeautifulSoup(clear_data, "html.parser")
+					level_clear_data_mas[cc][clear_type] = scrape_rates(soup, cc, 3)
+			if cc >= 17:
+				print(f"Now processing {cc:02d}_4_{clear_type}.html")
+				with open(f"clear_percent/{cc:02d}_4_{clear_type}.html", "r", encoding="utf-8") as clear_data:
+					soup = BeautifulSoup(clear_data, "html.parser")
+					level_clear_data_remas[cc][clear_type] = scrape_rates(soup, cc, 4)
 
 	final_data = {
 		'expert': level_clear_data_exp,
