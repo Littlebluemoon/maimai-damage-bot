@@ -1,3 +1,4 @@
+import json
 import os
 from typing import List
 
@@ -10,7 +11,7 @@ from models.Stats import Stats00, Stats01, Stats02, Stats03, Stats04
 from utils.database import SessionLocal
 from utils.charts import convert_cc_to_difficulty
 from constants import NOTE_NAMES, NOTE_MULTIPLIER_BY_INDEX, GREAT, GOOD, MISS, PERFECT, STD_EMOJI, DX_EMOJI, DIFF_COLOR, \
-	LEVEL_LIST, TITLE_RARITY_COLOR, VERSION, GENRES
+	LEVEL_LIST, TITLE_RARITY_COLOR, VERSION, GENRES, DIFF_EMOJI, DIFF_SPECTRUM
 from discord import Embed
 from decimal import Decimal
 
@@ -139,6 +140,24 @@ def generate_song_card(obj: List[SongData]):
 		deleted_string = ':wastebasket: **Deleted:** ' + str(obj[0].deleted) + '\n'
 	if obj[0].locked:
 		locked_string = ':lock: **Locked:** ' + obj[0].locked + '\n'
+	# Clear data
+	clear_data_string = ''
+	with open(os.getenv("SERVER_CLEAR_DATA_FILE"), "r") as clear_data:
+		clear_data_obj = json.load(clear_data)
+	for chart in obj:
+		clear_data_string += "**DX:**\n" if chart.id >= 10000 else "**ST:**\n"
+		if float(chart.exp) >= 8:
+			exp_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.exp))
+			exp_clear_rate = clear_data_obj['expert'][str(exp_diff_code)]['sssp'][str(chart.id)]
+			clear_data_string += f'{DIFF_EMOJI[2]} **SSS+**: {"No data" if not exp_clear_rate else str(exp_clear_rate) + " %"}\n'
+		mas_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.mas))
+		mas_clear_rate = clear_data_obj['master'][str(mas_diff_code)]['sssp'][str(chart.id)]
+		clear_data_string += f'{DIFF_EMOJI[3]} **SSS+**: {"No data" if not mas_clear_rate else str(mas_clear_rate) + " %"}\n'
+		if chart.rem:
+			rem_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.rem))
+			rem_clear_rate = clear_data_obj['remas'][str(rem_diff_code)]['sssp'][str(chart.id)]
+			clear_data_string += f'{DIFF_EMOJI[4]} **SSS+**: {"No data" if not rem_clear_rate else str(rem_clear_rate) + " %"}\n'
+
 	bpm = find_bpm(obj[0].id)['def']
 	embed = Embed(title=title,
 				 description=f"""{aka}
@@ -150,9 +169,13 @@ def generate_song_card(obj: List[SongData]):
 **BPM:** {str(bpm)}
 **Difficulty:**
 {diff_str}
+**Server Clear Rates:**
+{clear_data_string}
 """,
 color=TITLE_RARITY_COLOR['Rainbow'])
 	embed.set_thumbnail(url=thumb_url)
+	embed.set_footer(text="Server Clear Rates data gathered from maimaiDX-net/Record/World Stats.\nLower ranks will be added soon "
+					 "since I am rate limited.")
 	return embed
 
 def query_chart_stats_by_id(chart_id, diff):
