@@ -24,7 +24,8 @@ def get_song_object(query: str):
 		else:
 			try:
 				## FUCK THESE SONGS
-				if query.lower() in ['link maimai', 'link (maimai)']:
+				## LIKE SERIOUSLY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCK
+				if query.lower() in ['link', 'link maimai', 'link (maimai)']:
 					obj = [query_single_by_id(131)]
 				elif query.lower() in ['link nico', 'link2', 'link circle of friends', 'link (circle of friends)']:
 					obj = [query_single_by_id(383)]
