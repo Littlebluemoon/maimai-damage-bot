@@ -1,6 +1,11 @@
-import base64
+import os
 
-data = b'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
+from constants import DIFF_SPECTRUM
+from utils.charts import convert_cc_to_difficulty
+from dotenv import load_dotenv
 
-with open("dummy.png", "wb") as f:
-    f.write(base64.b64decode(data))
+load_dotenv()
+print(os.getenv("RATING_LOOKUP_PATH"))
+print(convert_cc_to_difficulty('9.7'))
+
+# print(DIFF_SPECTRUM.index(convert_cc_to_difficulty(9.7)))

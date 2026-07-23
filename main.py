@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 import certifi
@@ -7,6 +8,7 @@ from dotenv import load_dotenv
 
 from command.chiho import chiho
 from command.info import about
+from scrape_tasks.clear_percentage import scrape_job
 
 load_dotenv()
 from command.songdata import lookup, detail, find
@@ -29,6 +31,8 @@ import slash_command.collection
 import slash_command.cheats
 import slash_command.border
 import slash_command.heatmap
+
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -94,6 +98,13 @@ async def on_ready():
 	synced = await bot.tree.sync()
 	# print(synced)
 
-# print(bot.tree.get_commands())
-bot.run(os.getenv("BOT_TOKEN"))
+scheduler = AsyncIOScheduler()
 
+async def main():
+# print(bot.tree.get_commands())
+	scheduler.add_job(scrape_job, "cron", hour=7, minute=0)
+	scheduler.start()
+	async with bot:
+		await bot.start(os.getenv("BOT_TOKEN"))
+
+asyncio.run(main())

@@ -1,4 +1,5 @@
 import asyncio
+import json
 
 import httpx
 from bs4 import BeautifulSoup
@@ -16,13 +17,15 @@ URL = 'https://maimaidx-eng.com/maimai-mobile/record/nationalData/search/'
 AUTH2 = 'https://lng-tgk-aime-gw.am-all.net/common_auth/login?site_id=maimaidxex&redirect_url=https://maimaidx-eng.com/maimai-mobile/&back_url=https://maimai.sega.com/'
 MAIMAI_HOMEPAGE = 'https://maimaidx-eng.com/maimai-mobile/'
 
+timeout = httpx.Timeout(60)
+
 creds = {
 	'retention': '1',
 	'sid': os.getenv("SEGAID"),
 	'password': os.getenv("SEGAID_PASSWORD"),
 }
 
-print(creds)
+# print(creds)
 
 headers_template = {
 	"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -83,16 +86,16 @@ def scrape_rates(soup, cc, difficulty):
 		result[chart_id] = clear_rate
 	return result
 
-async def main():
-	async with httpx.AsyncClient() as client:
+async def scrape_job():
+	async with httpx.AsyncClient(timeout=timeout) as client:
 		resp2 = await client.post(AUTH2)
 		jsession = resp2.cookies.get('JSESSIONID')
 		clal = resp2.cookies.get('clal')
-		print(jsession, clal)
+		# print(jsession, clal)
 		resp3 = await client.post(AUTH, data=creds, headers=headers_template, cookies={'JSESSIONID': jsession})
-		print(resp3.text)
+		# print(resp3.text)
 		redirect = resp3.headers.get('location')
-		print(redirect)
+		# print(redirect)
 		resp4 = await client.get(redirect, headers=headers_template)
 		r5_headers = dict(resp4.headers)
 		r5_headers['referer'] = 'https://maimaidx-eng.com/maimai-mobile/'
@@ -112,26 +115,130 @@ async def main():
 				resp_exp_sssp = await client.get(URL, headers=r5_headers,
 					 params={'level': str(cc), 'clearType': '0', 'sort': '0', 'diff': '2'})
 				# Wait 3 secs between reqs to prevent rate limiting
-				print(f"Data got with length {len(resp_exp_sssp.text)}")
-				soup = BeautifulSoup(resp_exp_sssp.text, 'html.parser')
-				level_clear_data[cc]['sssp'] = scrape_rates(soup, cc, 2)
+				# and prevent incorrect overwriting
+				# == 0 iff you get rate limited
+				if len(resp_exp_sssp.text) != 0:
+					with open(f"clear_percent/{cc:02d}_2_sssp.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_exp_sssp.text)
 				await asyncio.sleep(3)
-				# resp_exp_sss = await client.get(URL, headers=r5_headers,
-				# 	 params={'level': str(cc), 'clearType': '1', 'sort': '0', 'diff': '2'})
-				# await asyncio.sleep(3)
-				# resp_exp_ss = await client.get(URL, headers=r5_headers,
-				# 	params={'level': str(cc), 'clearType': '2', 'sort': '0', 'diff': '2'})
-				# await asyncio.sleep(3)
-				# resp_exp_s = await client.get(URL, headers=r5_headers,
-				# 	params={'level': str(cc), 'clearType': '3', 'sort': '0', 'diff': '2'})
-				# resp_exp_ap = await client.get(URL, headers=r5_headers,
-				# 	params={'level': str(cc), 'clearType': '4', 'sort': '0', 'diff': '2'})
+				resp_exp_sss = await client.get(URL, headers=r5_headers,
+					 params={'level': str(cc), 'clearType': '1', 'sort': '0', 'diff': '2'})
+				if len(resp_exp_sss.text) != 0:
+					with open(f"clear_percent/{cc:02d}_2_sss.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_exp_sss.text)
+				await asyncio.sleep(3)
+				resp_exp_ss = await client.get(URL, headers=r5_headers,
+					params={'level': str(cc), 'clearType': '2', 'sort': '0', 'diff': '2'})
+				if len(resp_exp_ss.text) != 0:
+					with open(f"clear_percent/{cc:02d}_2_ss.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_exp_ss.text)
+				await asyncio.sleep(3)
+				resp_exp_s = await client.get(URL, headers=r5_headers,
+					params={'level': str(cc), 'clearType': '3', 'sort': '0', 'diff': '2'})
+				if len(resp_exp_s.text) != 0:
+					with open(f"clear_percent/{cc:02d}_2_s.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_exp_s.text)
+				resp_exp_ap = await client.get(URL, headers=r5_headers,
+					params={'level': str(cc), 'clearType': '4', 'sort': '0', 'diff': '2'})
+				if len(resp_exp_ap.text) != 0:
+					with open(f"clear_percent/{cc:02d}_2_ap.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_exp_ap.text)
 
-			# if cc >= 17:
-			# 	resp5 = await client.get(URL, headers=r5_headers)
-			# if cc >= 14:
-			# 	resp5 = await client.get(URL, headers=r5_headers)
+			if cc >= 14 and cc < 23:
+				resp_mas_sssp = await client.get(URL, headers=r5_headers,
+												 params={'level': str(cc), 'clearType': '0', 'sort': '0', 'diff': '3'})
+				if len(resp_mas_sssp.text) != 0:
+					with open(f"clear_percent/{cc:02d}_3_sssp.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_mas_sssp.text)
+				await asyncio.sleep(3)
+				resp_mas_sss = await client.get(URL, headers=r5_headers,
+												params={'level': str(cc), 'clearType': '1', 'sort': '0', 'diff': '3'})
+				if len(resp_mas_sss.text) != 0:
+					with open(f"clear_percent/{cc:02d}_3_sss.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_mas_sss.text)
+				await asyncio.sleep(3)
+				resp_mas_ss = await client.get(URL, headers=r5_headers,
+											   params={'level': str(cc), 'clearType': '2', 'sort': '0', 'diff': '3'})
+				if len(resp_mas_ss.text) != 0:
+					with open(f"clear_percent/{cc:02d}_3_ss.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_mas_ss.text)
+				await asyncio.sleep(3)
+				resp_mas_s = await client.get(URL, headers=r5_headers,
+											  params={'level': str(cc), 'clearType': '3', 'sort': '0', 'diff': '3'})
+				if len(resp_mas_s.text) != 0:
+					with open(f"clear_percent/{cc:02d}_3_s.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_mas_s.text)
+				resp_mas_ap = await client.get(URL, headers=r5_headers,
+											   params={'level': str(cc), 'clearType': '4', 'sort': '0', 'diff': '3'})
+				if len(resp_mas_ap.text) != 0:
+					with open(f"clear_percent/{cc:02d}_3_ap.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_mas_ap.text)
+			if cc >= 17:
+				resp_rem_sssp = await client.get(URL, headers=r5_headers,
+												 params={'level': str(cc), 'clearType': '0', 'sort': '0', 'diff': '4'})
+				if len(resp_rem_sssp.text) != 0:
+					with open(f"clear_percent/{cc:02d}_4_sssp.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_rem_sssp.text)
+				await asyncio.sleep(3)
+				resp_rem_sss = await client.get(URL, headers=r5_headers,
+												params={'level': str(cc), 'clearType': '1', 'sort': '0', 'diff': '4'})
+				if len(resp_rem_sss.text) != 0:
+					with open(f"clear_percent/{cc:02d}_4_sss.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_rem_sss.text)
+				await asyncio.sleep(3)
+				resp_rem_ss = await client.get(URL, headers=r5_headers,
+											   params={'level': str(cc), 'clearType': '2', 'sort': '0', 'diff': '4'})
+				if len(resp_rem_ss.text) != 0:
+					with open(f"clear_percent/{cc:02d}_4_ss.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_rem_ss.text)
+				await asyncio.sleep(3)
+				resp_rem_s = await client.get(URL, headers=r5_headers,
+											  params={'level': str(cc), 'clearType': '3', 'sort': '0', 'diff': '4'})
+				if len(resp_rem_s.text) != 0:
+					with open(f"clear_percent/{cc:02d}_4_s.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_rem_s.text)
+				resp_rem_ap = await client.get(URL, headers=r5_headers,
+											   params={'level': str(cc), 'clearType': '4', 'sort': '0', 'diff': '4'})
+				if len(resp_rem_ap.text) != 0:
+					with open(f"clear_percent/{cc:02d}_4_ap.html", "w", encoding="utf-8") as out_file:
+						out_file.write(resp_rem_ap.text)
 		# print(resp5.text)
-	print(level_clear_data)
+	level_clear_data_exp = {}
+	level_clear_data_mas = {}
+	level_clear_data_remas = {}
+	for cc in range(9, 24):
+		level_clear_data_exp[cc] = {}
+		level_clear_data_mas[cc] = {}
+		level_clear_data_remas[cc] = {}
+	# Level range: 9~23
+	# Clear type range: 0~4 (SSS+ to S, AP)
+	# Difficulty range: 2~4 (exp~remas)
+	# Some heads up:
+	# Easiest remaster chart is 12 (12.3) (17)
+	# Easiest master chart is 10+ (10.7) (14)
+	# Hardest expert chart is 13+ (13.9) (20)
+	for cc in range(9, 24):
+		for clear_type in ['sssp', 'sss', 'ss', 's', 'ap']:
+			if cc < 21:
+				print(f"Now processing {cc:02d}_2_{clear_type}.html")
+				with open(f"clear_percent/{cc:02d}_2_{clear_type}.html", "r", encoding="utf-8") as clear_data:
+					soup = BeautifulSoup(clear_data, "html.parser")
+					level_clear_data_exp[cc][clear_type] = scrape_rates(soup, cc, 2)
+			if cc >= 14 and cc < 23:
+				print(f"Now processing {cc:02d}_3_{clear_type}.html")
+				with open(f"clear_percent/{cc:02d}_3_{clear_type}.html", "r", encoding="utf-8") as clear_data:
+					soup = BeautifulSoup(clear_data, "html.parser")
+					level_clear_data_mas[cc][clear_type] = scrape_rates(soup, cc, 3)
+			if cc >= 17:
+				print(f"Now processing {cc:02d}_4_{clear_type}.html")
+				with open(f"clear_percent/{cc:02d}_4_{clear_type}.html", "r", encoding="utf-8") as clear_data:
+					soup = BeautifulSoup(clear_data, "html.parser")
+					level_clear_data_remas[cc][clear_type] = scrape_rates(soup, cc, 4)
 
-asyncio.run(main())
+	final_data = {
+		'expert': level_clear_data_exp,
+		'master': level_clear_data_mas,
+		'remas': level_clear_data_remas
+	}
+	with open("server_clear_data.json", "w") as clear_data_file:
+		json.dump(final_data, clear_data_file)
