@@ -137,26 +137,30 @@ def generate_song_card(obj: List[SongData]):
 	deleted_string = ''
 	locked_string = ''
 	if obj[0].deleted:
-		deleted_string = ':wastebasket: **Deleted:** ' + str(obj[0].deleted) + '\n'
+		deleted_string = ':wastebasket: **Unavailable:** ' + str(obj[0].deleted) + '\n'
 	if obj[0].locked:
 		locked_string = ':lock: **Locked:** ' + obj[0].locked + '\n'
 	# Clear data
-	clear_data_string = ''
+	clear_data_string = '**Server Clear Rates:**\n'
 	with open(os.getenv("SERVER_CLEAR_DATA_FILE"), "r") as clear_data:
 		clear_data_obj = json.load(clear_data)
-	for chart in obj:
-		clear_data_string += "**DX:**\n" if chart.id >= 10000 else "**ST:**\n"
-		if float(chart.exp) >= 8:
-			exp_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.exp))
-			exp_clear_rate = clear_data_obj['expert'][str(exp_diff_code)]['sssp'][str(chart.id)]
-			clear_data_string += f'{DIFF_EMOJI[2]} **SSS+**: {"No data" if not exp_clear_rate else str(exp_clear_rate) + " %"}\n'
-		mas_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.mas))
-		mas_clear_rate = clear_data_obj['master'][str(mas_diff_code)]['sssp'][str(chart.id)]
-		clear_data_string += f'{DIFF_EMOJI[3]} **SSS+**: {"No data" if not mas_clear_rate else str(mas_clear_rate) + " %"}\n'
-		if chart.rem:
-			rem_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.rem))
-			rem_clear_rate = clear_data_obj['remas'][str(rem_diff_code)]['sssp'][str(chart.id)]
-			clear_data_string += f'{DIFF_EMOJI[4]} **SSS+**: {"No data" if not rem_clear_rate else str(rem_clear_rate) + " %"}\n'
+	print(obj[0].deleted)
+	if obj[0].deleted is not None:
+		clear_data_string = ''
+	else:
+		for chart in obj:
+			clear_data_string += "**DX:**\n" if chart.id >= 10000 else "**ST:**\n"
+			if float(chart.exp) >= 8:
+				exp_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.exp))
+				exp_clear_rate = clear_data_obj['expert'][str(exp_diff_code)]['sssp'][str(chart.id)]
+				clear_data_string += f'{DIFF_EMOJI[2]} **SSS+**: {"No data" if not exp_clear_rate else str(exp_clear_rate) + " %"}\n'
+			mas_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.mas))
+			mas_clear_rate = clear_data_obj['master'][str(mas_diff_code)]['sssp'][str(chart.id)]
+			clear_data_string += f'{DIFF_EMOJI[3]} **SSS+**: {"No data" if not mas_clear_rate else str(mas_clear_rate) + " %"}\n'
+			if chart.rem:
+				rem_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.rem))
+				rem_clear_rate = clear_data_obj['remas'][str(rem_diff_code)]['sssp'][str(chart.id)]
+				clear_data_string += f'{DIFF_EMOJI[4]} **SSS+**: {"No data" if not rem_clear_rate else str(rem_clear_rate) + " %"}\n'
 
 	bpm = find_bpm(obj[0].id)['def']
 	embed = Embed(title=title,
@@ -169,7 +173,6 @@ def generate_song_card(obj: List[SongData]):
 **BPM:** {str(bpm)}
 **Difficulty:**
 {diff_str}
-**Server Clear Rates:**
 {clear_data_string}
 """,
 color=TITLE_RARITY_COLOR['Rainbow'])
