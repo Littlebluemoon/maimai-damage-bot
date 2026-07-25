@@ -82,7 +82,11 @@ def scrape_rates(soup, cc, difficulty):
 				chart_id = 131
 		else:
 			chart_id = transform_chart_id(chart_obj.id, chart_type)
-		clear_rate = round(float(song.find('span', class_='f_r').text[:-1]), 2)
+		rate_text = song.find('span', class_='f_r').text[:-1]
+		if '--' in rate_text:
+			clear_rate = None
+		else:
+			clear_rate = round(float(rate_text), 2)
 		result[chart_id] = clear_rate
 	return result
 
