@@ -150,32 +150,36 @@ def generate_song_card(obj: List[SongData]):
 	else:
 		for chart in obj:
 			clear_data_string += "**DX:**\n" if chart.id >= 10000 else "**ST:**\n"
-			if float(chart.exp) >= 8:
-				exp_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.exp))
-				clear_data_string += f'{DIFF_EMOJI[2]}   '
-				for diff in ['sssp', 'sss', 'ss', 's', 'ap']:
-					if not clear_data_obj['expert'][str(exp_diff_code)][diff][str(chart.id)]:
-						clear_data_string += '-- / '
-					else:
-						clear_data_string += str(clear_data_obj['expert'][str(exp_diff_code)][diff][str(chart.id)]) + ' % / '
-				clear_data_string = clear_data_string[:-2] + '\n'
 			mas_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.mas))
-			clear_data_string += f'{DIFF_EMOJI[3]}   '
-			for diff in ['sssp', 'sss', 'ss', 's', 'ap']:
-				if not clear_data_obj['master'][str(mas_diff_code)][diff][str(chart.id)]:
-					clear_data_string += '-- / '
-				else:
-					clear_data_string += str(clear_data_obj['master'][str(mas_diff_code)][diff][str(chart.id)]) + ' % / '
-			clear_data_string = clear_data_string[:-2] + '\n'
-			if chart.rem:
-				rem_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.rem))
-				clear_data_string += f'{DIFF_EMOJI[4]}   '
+			is_secret = clear_data_obj['master'][str(mas_diff_code)]['ap'].get(str(chart.id), None)
+			if not is_secret:
+				clear_data_string += 'No data'
+			else:
+				if float(chart.exp) >= 8:
+					exp_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.exp))
+					clear_data_string += f'{DIFF_EMOJI[2]}   '
+					for diff in ['sssp', 'sss', 'ss', 's', 'ap']:
+						if not clear_data_obj['expert'][str(exp_diff_code)][diff][str(chart.id)]:
+							clear_data_string += '-- / '
+						else:
+							clear_data_string += str(clear_data_obj['expert'][str(exp_diff_code)][diff][str(chart.id)]) + ' % / '
+					clear_data_string = clear_data_string[:-2] + '\n'
+				clear_data_string += f'{DIFF_EMOJI[3]}   '
 				for diff in ['sssp', 'sss', 'ss', 's', 'ap']:
-					if not clear_data_obj['remas'][str(rem_diff_code)][diff][str(chart.id)]:
+					if not clear_data_obj['master'][str(mas_diff_code)][diff][str(chart.id)]:
 						clear_data_string += '-- / '
 					else:
-						clear_data_string += str(clear_data_obj['remas'][str(rem_diff_code)][diff][str(chart.id)]) + ' % / '
-				clear_data_string = clear_data_string[:-2]
+						clear_data_string += str(clear_data_obj['master'][str(mas_diff_code)][diff][str(chart.id)]) + ' % / '
+				clear_data_string = clear_data_string[:-2] + '\n'
+				if chart.rem:
+					rem_diff_code = DIFF_SPECTRUM.index(convert_cc_to_difficulty(chart.rem))
+					clear_data_string += f'{DIFF_EMOJI[4]}   '
+					for diff in ['sssp', 'sss', 'ss', 's', 'ap']:
+						if not clear_data_obj['remas'][str(rem_diff_code)][diff][str(chart.id)]:
+							clear_data_string += '-- / '
+						else:
+							clear_data_string += str(clear_data_obj['remas'][str(rem_diff_code)][diff][str(chart.id)]) + ' % / '
+					clear_data_string = clear_data_string[:-2]
 
 	bpm = find_bpm(obj[0].id)['def']
 	embed = Embed(title=title,
