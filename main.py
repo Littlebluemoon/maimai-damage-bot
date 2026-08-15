@@ -104,6 +104,8 @@ async def main():
 # print(bot.tree.get_commands())
 	scheduler.add_job(scrape_job, "cron", hour=7, minute=0)
 	scheduler.start()
+	# Once
+	await scrape_job()
 	async with bot:
 		await bot.start(os.getenv("BOT_TOKEN"))
 
