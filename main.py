@@ -103,7 +103,7 @@ scheduler = AsyncIOScheduler()
 async def main():
 # print(bot.tree.get_commands())
 	# Once
-	await scrape_job()
+	scheduler.add_job(scrape_job, "date")
 	scheduler.add_job(scrape_job, "cron", hour=7, minute=0)
 	scheduler.start()
 	async with bot:
