@@ -1491,3 +1491,5 @@ T氏の話を信じるな	T-shi no hanashi wo shinjiru na	Don't Believe In T
 キミは“見ていたね”？	Kimi wa "miteitane"?
 奇々解体	Kikikaitai
 Nine Point Eight	9.8
+オールマスター	All Master
+クロノイデア	Chronoidea
