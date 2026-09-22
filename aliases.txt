@@ -1493,3 +1493,6 @@ T氏の話を信じるな	T-shi no hanashi wo shinjiru na	Don't Believe In T
 Nine Point Eight	9.8
 オールマスター	All Master
 クロノイデア	Chronoidea
+雑魚	Zako
+お返事まだカナ？おじさん構文！	Still Waiting for Your Reply... Ojisan Style Text	O henji madakana? Ojisan koubun!
+RONDØ	RONDO
